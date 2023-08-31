@@ -4,9 +4,11 @@
 
 Qdrant is a vector similarity search engine that provides a production-ready service with a convenient API to store, search, and manage points (i.e. vectors) with an additional payload.
 
-### Distributed deployment
+This repository will contain the require infrastructure to deploy Qdrant in a distributed way as indicated in the [documentation](https://qdrant.tech/documentation/guides/distributed_deployment/).
 
-Based on the [documentation](https://qdrant.tech/documentation/guides/distributed_deployment/) in the `local` folder there is an example using docker-compose to deploy it in a distributed way with three nodes.
+### Local deployment
+
+The `local` folder contains an example using docker-compose to deploy it Qdrant with three nodes.
 
 To run the database execute the following commands:
 ```
