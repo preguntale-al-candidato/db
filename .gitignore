@@ -1,8 +1,3 @@
-local/qdrant_storage/**/aliases
-local/qdrant_storage/**/collections
-local/qdrant_storage/**/collections_meta_wal
-local/qdrant_storage/**/raft_state.json
-
 # Created by https://www.toptal.com/developers/gitignore/api/git,linux,macos,windows,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,linux,macos,windows,visualstudiocode
 
