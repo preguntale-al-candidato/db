@@ -1,4 +1,4 @@
-# Preguntale al Candidato - Database
+# Preguntale al Candidato - Base de datos
 
 Este repositorio contiene la infrastructura necesaria para desplegar la base de datos [Milvus](https://milvus.io).
 
