@@ -1,18 +1,14 @@
 # Preguntale al Candidato - Database
 
-## Milvus
+Este repositorio contiene la infrastructura necesaria para desplegar la base de datos [Milvus](https://milvus.io).
 
-This repository will contain the require infrastructure to deploy Milvus locally and in a distributed way as indicated in the [documentation](https://milvus.io/docs).
+## Despliegue local
 
-### Local deployment
+Dentro de la carpeta local (`cd local`), podrá encontrar un ejemplo sobre como ejecutar Milvus localmente utilizando Docker Compose.
 
-The `local` folder contains an example using `docker-compose`` to deploy the database locally.
+Utilice los comandos definidos en el Makefile para mayor simplicidad.
 
-Use the commands from Makefile to interact with the deployment.
-```
-cd local
-make start
-make logs container=milvus-standalone
-make connect
-make clean
-```
+- `make start`: para lanzar la ejecuón de la base de datos.
+- `make logs container=milvus-standalone`: para ver los logs de la base de datos.
+- `make connect`: para ver la IP y el puerto que se necesita para conectarse a la base de datos.
+- `make clean`: para detener la base de datos y limpiar los archivos.
