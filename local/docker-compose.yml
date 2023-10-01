@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.8"
 
 services:
   etcd:
@@ -10,7 +10,7 @@ services:
       - ETCD_QUOTA_BACKEND_BYTES=4294967296
       - ETCD_SNAPSHOT_COUNT=50000
     volumes:
-      - ./volumes/etcd:/etcd
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     healthcheck:
       test: ["CMD", "etcdctl", "endpoint", "health"]
@@ -28,7 +28,7 @@ services:
       - "9001:9001"
       - "9000:9000"
     volumes:
-      - ./volumes/minio:/minio_data
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
     command: minio server /minio_data --console-address ":9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -38,13 +38,13 @@ services:
 
   standalone:
     container_name: milvus-standalone
-    image: milvusdb/milvus:${MILVIOUS_VERSION}
+    image: milvusdb/milvus:v2.3.1
     command: ["milvus", "run", "standalone"]
     environment:
       ETCD_ENDPOINTS: etcd:2379
       MINIO_ADDRESS: minio:9000
     volumes:
-      - ./volumes/milvus:/var/lib/milvus
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
       interval: 30s
@@ -55,9 +55,25 @@ services:
       - "19530:19530"
       - "9091:9091"
     depends_on:
-      - "etcd"
-      - "minio"
+      etcd:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  # backend:
+  #   container_name: backend
+  #   # image: 301634789447.dkr.ecr.us-east-1.amazonaws.com/pac-backend:latest
+  #   # image: backend
+  #   environment:
+  #     OPENAI_API_KEY: ${API_KEY}
+  #     MILVUS_HOST: standalone
+  #     MILVUS_PORT: 19530
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     standalone:
+  #       condition: service_healthy
 
 networks:
   default:
-    name: milvus
+    name: pac
